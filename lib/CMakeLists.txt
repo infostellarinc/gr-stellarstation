@@ -85,7 +85,7 @@ target_link_libraries(gnuradio-stellarstation
   ${Boost_LIBRARIES}
   ${GNURADIO_ALL_LIBRARIES}
   ${_PROTOBUF_LIBPROTOBUF}
-  gRPC::grpc++_unsecure)
+  gRPC::grpc++)
 set_target_properties(gnuradio-stellarstation PROPERTIES DEFINE_SYMBOL "gnuradio_stellarstation_EXPORTS")
 
 if(APPLE)

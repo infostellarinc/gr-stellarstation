@@ -25,6 +25,10 @@
 
 #include <thread>
 
+#include "stellarstation.grpc.pb.h"
+
+using stellarstation::api::v1::StellarStationService;
+
 namespace gr {
   namespace stellarstation {
 
@@ -36,6 +40,7 @@ namespace gr {
       std::thread *thread_;
       const pmt::pmt_t port_;
       const char *key_path_;
+      std::unique_ptr<StellarStationService::Stub> stub_;
 
      public:
       api_source_impl(const char *key_path);

@@ -26,6 +26,16 @@
 #include "api_source_impl.h"
 
 #include <iostream>
+#include <memory>
+
+#include <grpc/grpc.h>
+#include <grpc/support/alloc.h>
+#include <grpc/support/log.h>
+#include <grpcpp/channel.h>
+#include <grpcpp/create_channel.h>
+#include <grpcpp/security/credentials.h>
+
+using stellarstation::api::v1::StellarStationService;
 
 namespace gr {
   namespace stellarstation {
@@ -52,7 +62,20 @@ namespace gr {
     }
 
     bool api_source_impl::start() {
-      // TODO: Start things here
+      static grpc::string json_key;
+      std::ifstream json_key_file(key_path_);
+      std::stringstream key_stream;
+      key_stream << json_key_file.rdbuf();
+      json_key = key_stream.str();
+
+      auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
+      // TODO: Need the tls file?
+      auto channel_creds = grpc::SslCredentials(grpc::SslCredentialsOptions());
+      auto composite_creds = grpc::CompositeChannelCredentials(channel_creds, call_creds);
+      // TODO: Don't hardcode the server to talk to
+      auto channel = grpc::CreateChannel("https://127.0.0.1:8080", composite_creds);
+      stub_  = StellarStationService::NewStub(channel);
+
       thread_ = new std::thread(std::bind(&api_source_impl::readloop, this));
       return true;
     }
