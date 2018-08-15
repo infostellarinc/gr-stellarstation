@@ -27,6 +27,7 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND stellarstation_sources
+    api_source_impl.cc
 )
 
 set(stellarstation_sources "${stellarstation_sources}" PARENT_SCOPE)

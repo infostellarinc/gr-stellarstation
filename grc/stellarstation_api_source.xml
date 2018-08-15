@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<block>
+  <name>Stellarstation API Source</name>
+  <key>stellarstation_api_source</key>
+  <category>[stellarstation]</category>
+  <import>import stellarstation</import>
+  <make>stellarstation.api_source()</make>
+
+  <source>
+    <name>out</name>
+    <type>message</type>
+  </source>
+
+</block>

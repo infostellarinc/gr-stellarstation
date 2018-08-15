@@ -23,5 +23,5 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/stellarstation
+    api_source.h DESTINATION include/stellarstation
 )
