@@ -4,7 +4,14 @@
   <key>stellarstation_api_source</key>
   <category>[stellarstation]</category>
   <import>import stellarstation</import>
-  <make>stellarstation.api_source()</make>
+  <make>stellarstation.api_source($key)</make>
+
+  <param>
+    <name>Stellarstation API Key Filepath</name>
+    <key>key</key>
+    <value></value>
+    <type>file_open</type>
+  </param>
 
   <source>
     <name>out</name>

@@ -35,9 +35,10 @@ namespace gr {
 
       std::thread *thread_;
       const pmt::pmt_t port_;
+      const char *key_path_;
 
      public:
-      api_source_impl();
+      api_source_impl(const char *key_path);
       ~api_source_impl();
 
       bool start();

@@ -31,21 +31,22 @@ namespace gr {
   namespace stellarstation {
 
     api_source::sptr
-    api_source::make()
+    api_source::make(const char *key_path)
     {
       return gnuradio::get_initial_sptr
-        (new api_source_impl());
+        (new api_source_impl(key_path));
     }
 
     /*
      * The private constructor
      */
-    api_source_impl::api_source_impl()
+    api_source_impl::api_source_impl(const char *key_path)
       : gr::block("api_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
         port_(pmt::mp("out")),
-        thread_(NULL)
+        thread_(NULL),
+        key_path_(key_path)
     {
         message_port_register_out(port_);
     }
@@ -64,7 +65,7 @@ namespace gr {
     }
 
     void api_source_impl::readloop() {
-      std::cout << "Started loop" << std::endl;
+      std::cout << "Started loop " << key_path_ << std::endl;
     }
 
     /*
