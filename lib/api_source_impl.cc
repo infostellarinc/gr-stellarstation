@@ -99,8 +99,17 @@ namespace gr {
     }
 
     bool api_source_impl::stop() {
-      // TODO: End things here
+      std::cout << "Trying to stop" << std::endl;
+
+      // Signal the server it's time to stop
+      client_reader_writer_->WritesDone();
+
+      // Wait for the server to end the stream.
       thread_->join();
+
+      grpc::Status status = client_reader_writer_->Finish();
+      if (!status.ok()) std::cout << "rpc failed." << std::endl;
+
       std::cout << "Stopped successfully" << std::endl;
       return true;
     }
