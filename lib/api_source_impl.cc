@@ -36,6 +36,9 @@
 #include <grpcpp/security/credentials.h>
 
 using stellarstation::api::v1::StellarStationService;
+using stellarstation::api::v1::SatelliteStreamRequest;
+using stellarstation::api::v1::SatelliteStreamResponse;
+using stellarstation::api::v1::ReceiveTelemetryResponse;
 
 namespace gr {
   namespace stellarstation {
@@ -62,19 +65,34 @@ namespace gr {
     }
 
     bool api_source_impl::start() {
-      static grpc::string json_key;
+      // TODO: Make this a function
       std::ifstream json_key_file(key_path_);
       std::stringstream key_stream;
       key_stream << json_key_file.rdbuf();
-      json_key = key_stream.str();
+      grpc::string json_key(key_stream.str());
 
       auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
-      // TODO: Need the tls file?
-      auto channel_creds = grpc::SslCredentials(grpc::SslCredentialsOptions());
+      // TODO: Don't hardcode tls file and make this a function
+      std::ifstream root_cert_key_file("/home/rei/IdeaProjects/stellarstation-api/examples/fakeserver/src/main/resources/tls.crt");
+      std::stringstream root_cert_key_stream;
+      root_cert_key_stream << root_cert_key_file.rdbuf();
+      grpc::string root_cert(root_cert_key_stream.str());
+
+      grpc::SslCredentialsOptions opts;
+      opts.pem_root_certs = root_cert;
+
+      auto channel_creds = grpc::SslCredentials(opts);
       auto composite_creds = grpc::CompositeChannelCredentials(channel_creds, call_creds);
       // TODO: Don't hardcode the server to talk to
-      auto channel = grpc::CreateChannel("https://127.0.0.1:8080", composite_creds);
+      auto channel = grpc::CreateChannel("localhost:8080", composite_creds);
       stub_  = StellarStationService::NewStub(channel);
+
+      client_reader_writer_ = stub_->OpenSatelliteStream(&context_);
+
+      SatelliteStreamRequest request;
+      // TODO: Don't hardcode this
+      request.set_satellite_id("5");
+      client_reader_writer_->Write(request);
 
       thread_ = new std::thread(std::bind(&api_source_impl::readloop, this));
       return true;
@@ -89,6 +107,22 @@ namespace gr {
 
     void api_source_impl::readloop() {
       std::cout << "Started loop " << key_path_ << std::endl;
+
+      SatelliteStreamResponse response;
+      while (client_reader_writer_->Read(&response)) {
+        std::cout << "STREAM ID" << response.stream_id() << std::endl;
+        if (response.has_receive_telemetry_response()) {
+            const ReceiveTelemetryResponse &telem_resp = response.receive_telemetry_response();
+            std::cout << "data: ";
+            for (int i=0; i<100; i++) {
+              std::cout << (int)telem_resp.telemetry().data()[i];
+            }
+            std::cout << std::endl;
+            std::cout << "data length: " << telem_resp.telemetry().data().size() << std::endl;
+            std::cout << "framing: " << telem_resp.telemetry().framing() << std::endl;
+            std::cout << "dl frequency: " << telem_resp.telemetry().downlink_frequency_hz() << std::endl;
+        }
+      }
     }
 
     /*
@@ -100,4 +134,3 @@ namespace gr {
 
   } /* namespace stellarstation */
 } /* namespace gr */
-
