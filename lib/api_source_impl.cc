@@ -45,17 +45,17 @@ namespace gr {
 
     api_source::sptr
     api_source::make(const char *satellite_id, const char *stream_id,
-                     const char *key_path, const char *root_cert_path)
+                     const char *key_path, const char *root_cert_path, const char *api_url)
     {
       return gnuradio::get_initial_sptr
-        (new api_source_impl(satellite_id, stream_id, key_path, root_cert_path));
+        (new api_source_impl(satellite_id, stream_id, key_path, root_cert_path, api_url));
     }
 
     /*
      * The private constructor
      */
     api_source_impl::api_source_impl(const char *satellite_id, const char *stream_id,
-                                     const char *key_path, const char *root_cert_path)
+                                     const char *key_path, const char *root_cert_path, const char *api_url)
       : gr::block("api_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
@@ -64,24 +64,26 @@ namespace gr {
         satellite_id_(satellite_id),
         stream_id_(stream_id),
         key_path_(key_path),
-        root_cert_path_(root_cert_path)
+        root_cert_path_(root_cert_path),
+        api_url_(api_url)
     {
         message_port_register_out(port_);
     }
 
     bool api_source_impl::start() {
       grpc::string json_key(read_file_into_string(key_path_));
-
       auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
-      grpc::string root_cert(read_file_into_string(root_cert_path_));
 
+      // TODO: This is probably wrong for the real stellarstation api
       grpc::SslCredentialsOptions opts;
-      opts.pem_root_certs = root_cert;
+      if ((root_cert_path_ != NULL) && (root_cert_path_[0] != '\0')) {
+         grpc::string root_cert(read_file_into_string(root_cert_path_));
+         opts.pem_root_certs = root_cert;
+      }
 
       auto channel_creds = grpc::SslCredentials(opts);
       auto composite_creds = grpc::CompositeChannelCredentials(channel_creds, call_creds);
-      // TODO: Don't hardcode the server to talk to
-      auto channel = grpc::CreateChannel("localhost:8080", composite_creds);
+      auto channel = grpc::CreateChannel(api_url_, composite_creds);
       stub_  = StellarStationService::NewStub(channel);
 
       client_reader_writer_ = stub_->OpenSatelliteStream(&context_);
@@ -112,7 +114,6 @@ namespace gr {
     }
 
     void api_source_impl::readloop() {
-      std::cout << "Started loop " << key_path_ << std::endl;
 
       SatelliteStreamResponse response;
       while (client_reader_writer_->Read(&response)) {
@@ -142,6 +143,7 @@ namespace gr {
     }
 
     grpc::string api_source_impl::read_file_into_string(const char *filename) {
+      std::cout << filename << std::endl;
       std::ifstream file(filename);
       std::stringstream stream;
       stream << file.rdbuf();

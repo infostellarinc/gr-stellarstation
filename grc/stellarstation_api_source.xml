@@ -4,7 +4,7 @@
   <key>stellarstation_api_source</key>
   <category>[stellarstation]</category>
   <import>import stellarstation</import>
-  <make>stellarstation.api_source($satellite_id, $stream_id, $key, $root_cert_path)</make>
+  <make>stellarstation.api_source($satellite_id, $stream_id, $key, $root_cert_path, $api_url)</make>
 
   <param>
     <name>Satellite ID</name>
@@ -32,6 +32,13 @@
     <key>root_cert_path</key>
     <value></value>
     <type>file_open</type>
+  </param>
+
+  <param>
+    <name>Stellarstation API URL</name>
+    <key>api_url</key>
+    <value>"api.stellarstation.com"</value>
+    <type>string</type>
   </param>
 
   <source>

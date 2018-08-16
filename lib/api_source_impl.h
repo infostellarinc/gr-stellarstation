@@ -46,13 +46,14 @@ namespace gr {
       const char *stream_id_;
       const char *key_path_;
       const char *root_cert_path_;
+      const char *api_url_;
       grpc::ClientContext context_;
       std::unique_ptr<StellarStationService::Stub> stub_;
       std::shared_ptr<grpc::ClientReaderWriter<SatelliteStreamRequest, SatelliteStreamResponse> > client_reader_writer_;
 
      public:
       api_source_impl(const char *satellite_id, const char *stream_id,
-                      const char *key_path, const char *root_cert_path);
+                      const char *key_path, const char *root_cert_path, const char *api_url);
       ~api_source_impl();
 
       bool start();
