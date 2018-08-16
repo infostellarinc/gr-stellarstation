@@ -42,6 +42,8 @@ namespace gr {
 
       std::thread *thread_;
       const pmt::pmt_t port_;
+      const char *satellite_id_;
+      const char *stream_id_;
       const char *key_path_;
       const char *root_cert_path_;
       grpc::ClientContext context_;
@@ -49,7 +51,8 @@ namespace gr {
       std::shared_ptr<grpc::ClientReaderWriter<SatelliteStreamRequest, SatelliteStreamResponse> > client_reader_writer_;
 
      public:
-      api_source_impl(const char *key_path, const char *root_cert_path);
+      api_source_impl(const char *satellite_id, const char *stream_id,
+                      const char *key_path, const char *root_cert_path);
       ~api_source_impl();
 
       bool start();

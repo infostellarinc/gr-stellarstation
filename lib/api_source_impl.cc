@@ -44,21 +44,25 @@ namespace gr {
   namespace stellarstation {
 
     api_source::sptr
-    api_source::make(const char *key_path, const char *root_cert_path)
+    api_source::make(const char *satellite_id, const char *stream_id,
+                     const char *key_path, const char *root_cert_path)
     {
       return gnuradio::get_initial_sptr
-        (new api_source_impl(key_path, root_cert_path));
+        (new api_source_impl(satellite_id, stream_id, key_path, root_cert_path));
     }
 
     /*
      * The private constructor
      */
-    api_source_impl::api_source_impl(const char *key_path, const char *root_cert_path)
+    api_source_impl::api_source_impl(const char *satellite_id, const char *stream_id,
+                                     const char *key_path, const char *root_cert_path)
       : gr::block("api_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
         port_(pmt::mp("out")),
         thread_(NULL),
+        satellite_id_(satellite_id),
+        stream_id_(stream_id),
         key_path_(key_path),
         root_cert_path_(root_cert_path)
     {
@@ -83,8 +87,8 @@ namespace gr {
       client_reader_writer_ = stub_->OpenSatelliteStream(&context_);
 
       SatelliteStreamRequest request;
-      // TODO: Don't hardcode this
-      request.set_satellite_id("5");
+      request.set_satellite_id(satellite_id_);
+      request.set_stream_id(stream_id_);
       client_reader_writer_->Write(request);
 
       thread_ = new std::thread(std::bind(&api_source_impl::readloop, this));

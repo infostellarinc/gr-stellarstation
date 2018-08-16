@@ -43,7 +43,8 @@ namespace gr {
      public:
       typedef boost::shared_ptr<api_source> sptr;
 
-      static sptr make(const char *key_path, const char *root_cert_path);
+      static sptr make(const char *satellite_id, const char *stream_id,
+                       const char *key_path, const char *root_cert_path);
     };
 
   } // namespace stellarstation
