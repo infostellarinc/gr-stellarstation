@@ -72,6 +72,7 @@ list(APPEND stellarstation_sources
     api_source_impl.cc
     ${hw_proto_srcs}
     ${hw_grpc_srcs}
+    pdu_to_stream_impl.cc
 )
 
 set(stellarstation_sources "${stellarstation_sources}" PARENT_SCOPE)

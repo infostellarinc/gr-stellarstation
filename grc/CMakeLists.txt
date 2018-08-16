@@ -19,5 +19,6 @@
 # Boston, MA 02110-1301, USA.
 
 install(FILES
-    stellarstation_api_source.xml DESTINATION share/gnuradio/grc/blocks
+    stellarstation_api_source.xml
+    stellarstation_pdu_to_stream.xml DESTINATION share/gnuradio/grc/blocks
 )
