@@ -122,14 +122,24 @@ namespace gr {
         std::cout << "STREAM ID" << response.stream_id() << std::endl;
         if (response.has_receive_telemetry_response()) {
             const ReceiveTelemetryResponse &telem_resp = response.receive_telemetry_response();
-            std::cout << "data: ";
-            for (int i=0; i<100; i++) {
-              std::cout << (int)telem_resp.telemetry().data()[i];
-            }
-            std::cout << std::endl;
-            std::cout << "data length: " << telem_resp.telemetry().data().size() << std::endl;
-            std::cout << "framing: " << telem_resp.telemetry().framing() << std::endl;
-            std::cout << "dl frequency: " << telem_resp.telemetry().downlink_frequency_hz() << std::endl;
+
+            pmt::pmt_t dict_pmt(pmt::make_dict());
+            dict_pmt = pmt::dict_add(dict_pmt,
+                                     pmt::intern("Downlink Frequency Hz"),
+                                     pmt::from_uint64(telem_resp.telemetry().downlink_frequency_hz()));
+            dict_pmt = pmt::dict_add(dict_pmt,
+                                     pmt::intern("Framing"),
+                                     pmt::from_uint64(telem_resp.telemetry().framing()));
+            dict_pmt = pmt::dict_add(dict_pmt,
+                                     pmt::intern("Frame header"),
+                                     pmt::make_blob(&telem_resp.telemetry().frame_header()[0],
+                                                    telem_resp.telemetry().frame_header().size()));
+
+            pmt::pmt_t vec_pmt(pmt::make_blob(&telem_resp.telemetry().data()[0],
+                               telem_resp.telemetry().data().size()));
+            pmt::pmt_t pdu(pmt::cons(dict_pmt, vec_pmt));
+
+            message_port_pub(port_, pdu);
         }
       }
     }
