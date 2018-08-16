@@ -44,39 +44,32 @@ namespace gr {
   namespace stellarstation {
 
     api_source::sptr
-    api_source::make(const char *key_path)
+    api_source::make(const char *key_path, const char *root_cert_path)
     {
       return gnuradio::get_initial_sptr
-        (new api_source_impl(key_path));
+        (new api_source_impl(key_path, root_cert_path));
     }
 
     /*
      * The private constructor
      */
-    api_source_impl::api_source_impl(const char *key_path)
+    api_source_impl::api_source_impl(const char *key_path, const char *root_cert_path)
       : gr::block("api_source",
               gr::io_signature::make(0, 0, 0),
               gr::io_signature::make(0, 0, 0)),
         port_(pmt::mp("out")),
         thread_(NULL),
-        key_path_(key_path)
+        key_path_(key_path),
+        root_cert_path_(root_cert_path)
     {
         message_port_register_out(port_);
     }
 
     bool api_source_impl::start() {
-      // TODO: Make this a function
-      std::ifstream json_key_file(key_path_);
-      std::stringstream key_stream;
-      key_stream << json_key_file.rdbuf();
-      grpc::string json_key(key_stream.str());
+      grpc::string json_key(read_file_into_string(key_path_));
 
       auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
-      // TODO: Don't hardcode tls file and make this a function
-      std::ifstream root_cert_key_file("/home/rei/IdeaProjects/stellarstation-api/examples/fakeserver/src/main/resources/tls.crt");
-      std::stringstream root_cert_key_stream;
-      root_cert_key_stream << root_cert_key_file.rdbuf();
-      grpc::string root_cert(root_cert_key_stream.str());
+      grpc::string root_cert(read_file_into_string(root_cert_path_));
 
       grpc::SslCredentialsOptions opts;
       opts.pem_root_certs = root_cert;
@@ -142,6 +135,13 @@ namespace gr {
             message_port_pub(port_, pdu);
         }
       }
+    }
+
+    grpc::string api_source_impl::read_file_into_string(const char *filename) {
+      std::ifstream file(filename);
+      std::stringstream stream;
+      stream << file.rdbuf();
+      return stream.str();
     }
 
     /*

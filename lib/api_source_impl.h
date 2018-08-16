@@ -38,16 +38,18 @@ namespace gr {
     {
      private:
       void readloop();
+      grpc::string read_file_into_string(const char *filename);
 
       std::thread *thread_;
       const pmt::pmt_t port_;
       const char *key_path_;
+      const char *root_cert_path_;
       grpc::ClientContext context_;
       std::unique_ptr<StellarStationService::Stub> stub_;
       std::shared_ptr<grpc::ClientReaderWriter<SatelliteStreamRequest, SatelliteStreamResponse> > client_reader_writer_;
 
      public:
-      api_source_impl(const char *key_path);
+      api_source_impl(const char *key_path, const char *root_cert_path);
       ~api_source_impl();
 
       bool start();

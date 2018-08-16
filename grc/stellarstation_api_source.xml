@@ -4,11 +4,18 @@
   <key>stellarstation_api_source</key>
   <category>[stellarstation]</category>
   <import>import stellarstation</import>
-  <make>stellarstation.api_source($key)</make>
+  <make>stellarstation.api_source($key, $root_cert_path)</make>
 
   <param>
     <name>Stellarstation API Key Filepath</name>
     <key>key</key>
+    <value></value>
+    <type>file_open</type>
+  </param>
+
+  <param>
+    <name>Fake Server tls.crt Filepath</name>
+    <key>root_cert_path</key>
     <value></value>
     <type>file_open</type>
   </param>
