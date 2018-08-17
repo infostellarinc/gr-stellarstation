@@ -2,7 +2,7 @@
 <block>
   <name>PDU to Stream</name>
   <key>stellarstation_pdu_to_stream</key>
-  <category>[stellarstation]</category>
+  <category>[stellarstation]/util</category>
   <import>from gnuradio import blocks</import>
   <import>import stellarstation</import>
   <make>stellarstation.pdu_to_stream($type.size)</make>
