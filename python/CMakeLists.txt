@@ -33,7 +33,7 @@ GR_PYTHON_INSTALL(
     FILES
     __init__.py
     iq_source.py
-    bitstream_source.py DESTINATION ${GR_PYTHON_DIR}/stellarstation
+    bitstream_source.py DESTINATION ${GR_PYTHON_DIR}/gr_stellarstation
 )
 
 ########################################################################

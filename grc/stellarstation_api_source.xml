@@ -3,8 +3,8 @@
   <name>Stellarstation API Source</name>
   <key>stellarstation_api_source</key>
   <category>[stellarstation]/core</category>
-  <import>import stellarstation</import>
-  <make>stellarstation.api_source($satellite_id, $stream_id, $key, $root_cert_path, $api_url)</make>
+  <import>import gr_stellarstation</import>
+  <make>gr_stellarstation.api_source($satellite_id, $stream_id, $key, $root_cert_path, $api_url)</make>
 
   <param>
     <name>Satellite ID</name>

@@ -3,8 +3,8 @@
   <name>Stellarstation Bitstream Source</name>
   <key>stellarstation_bitstream_source</key>
   <category>[stellarstation]</category>
-  <import>import stellarstation</import>
-  <make>stellarstation.bitstream_source($satellite_id, $stream_id, $key_path, $root_cert_path, $api_url)</make>
+  <import>import gr_stellarstation</import>
+  <make>gr_stellarstation.bitstream_source($satellite_id, $stream_id, $key_path, $root_cert_path, $api_url)</make>
   <param>
     <name>Satellite ID</name>
     <key>satellite_id</key>

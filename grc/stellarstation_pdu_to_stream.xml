@@ -4,8 +4,8 @@
   <key>stellarstation_pdu_to_stream</key>
   <category>[stellarstation]/util</category>
   <import>from gnuradio import blocks</import>
-  <import>import stellarstation</import>
-  <make>stellarstation.pdu_to_stream($type.size)</make>
+  <import>import gr_stellarstation</import>
+  <make>gr_stellarstation.pdu_to_stream($type.size)</make>
 
   <param>
     <name>Output Type</name>

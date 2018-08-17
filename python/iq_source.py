@@ -22,7 +22,7 @@
 from gnuradio import gr
 from gnuradio import blocks
 import pmt
-from stellarstation import stellarstation_swig
+from gr_stellarstation import stellarstation_swig
 
 
 class iq_source(gr.hier_block2):
