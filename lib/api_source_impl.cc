@@ -106,7 +106,9 @@ namespace gr {
       thread_->join();
 
       grpc::Status status = client_reader_writer_->Finish();
-      if (!status.ok()) std::cout << "rpc failed." << std::endl;
+      if (!status.ok()) {
+        std::cerr << "rpc failed. Error code: " << status.error_code() << std::endl << status.error_message() << status.error_details() << std::endl;
+      }
 
       std::cout << "Stopped successfully" << std::endl;
       return true;
