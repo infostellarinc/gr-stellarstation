@@ -46,7 +46,6 @@ class api_source_impl : public api_source {
 
  private:
   void readloop();
-  grpc::string read_file_into_string(std::string filename);
 
   std::thread *thread_;
   const pmt::pmt_t port_;
@@ -61,6 +60,8 @@ class api_source_impl : public api_source {
                                            SatelliteStreamResponse> >
       client_reader_writer_;
 };
+
+static grpc::string read_file_into_string(std::string filename);
 
 }  // namespace stellarstation
 }  // namespace gr

@@ -149,7 +149,7 @@ void api_source_impl::readloop() {
   }
 }
 
-grpc::string api_source_impl::read_file_into_string(std::string filename) {
+static grpc::string read_file_into_string(std::string filename) {
   std::ifstream file(filename);
   std::stringstream stream;
   stream << file.rdbuf();
