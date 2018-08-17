@@ -31,6 +31,14 @@ class iq_source(gr.hier_block2):
     using the Stellarstation API.
     """
     def __init__(self, satellite_id, stream_id, key_path, root_cert_path="", api_url="api.stellarstation.com"):
+        """
+        :param satellite_id: Satellite ID to connect to
+        :param stream_id: Stream ID to connect to. Can be an empty string.
+        :param key_path: Path to JSON API Key
+        :param root_cert_path: Path to root certificate for development server.
+        Leave blank for connecting to the real API
+        :param api_url: API URL to connect to.
+        """
         gr.hier_block2.__init__(self,
             "iq_source",
             gr.io_signature(0, 0, 0),  # Input signature

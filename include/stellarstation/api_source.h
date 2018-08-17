@@ -43,6 +43,21 @@ namespace gr {
      public:
       typedef boost::shared_ptr<api_source> sptr;
 
+      /**
+       * The Stellarstation API Source block is responsible for connecting to the
+       * Stellarstation API, receiving data, and propagating the received packets
+       * as PMTs for downstream blocks to consume. For users who are only expecting
+       * to receive one type of data from the satellite (IQ data, bitstream), you
+       * should use the dedicated hierarchical blocks (based on this block) for your
+       * purpose e.g. Stellarstation IQ Source, Stellarstation bitstream source.
+       *
+       * @param satellite_id Satellite ID to connect to
+       * @param stream_id Stream ID to connect to. Can be an empty string.
+       * @param key_path Path to JSON API Key
+       * @param root_cert_path Path to root certificate for development server.
+       * Leave blank for connecting to the real API
+       * @param api_url API URL to connect to.
+       */
       static sptr make(const char *satellite_id, const char *stream_id,
                        const char *key_path, const char *root_cert_path, const char *api_url);
     };
