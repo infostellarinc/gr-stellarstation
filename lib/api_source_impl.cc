@@ -43,21 +43,21 @@ using stellarstation::api::v1::ReceiveTelemetryResponse;
 namespace gr {
 namespace stellarstation {
 
-api_source::sptr api_source::make(const char *satellite_id,
-                                  const char *stream_id, const char *key_path,
-                                  const char *root_cert_path,
-                                  const char *api_url) {
+api_source::sptr api_source::make(std::string satellite_id,
+                                  std::string stream_id, std::string key_path,
+                                  std::string root_cert_path,
+                                  std::string api_url) {
   return gnuradio::get_initial_sptr(new api_source_impl(
-      satellite_id, stream_id, key_path, root_cert_path, api_url));
+      satellite_id, std::string(stream_id), key_path, root_cert_path, api_url));
 }
 
 /*
  * The private constructor
  */
-api_source_impl::api_source_impl(const char *satellite_id,
-                                 const char *stream_id, const char *key_path,
-                                 const char *root_cert_path,
-                                 const char *api_url)
+api_source_impl::api_source_impl(std::string satellite_id,
+                                 std::string stream_id, std::string key_path,
+                                 std::string root_cert_path,
+                                 std::string api_url)
     : gr::block("api_source", gr::io_signature::make(0, 0, 0),
                 gr::io_signature::make(0, 0, 0)),
       port_(pmt::mp("out")),
@@ -75,7 +75,7 @@ bool api_source_impl::start() {
   auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
 
   grpc::SslCredentialsOptions opts;
-  if ((root_cert_path_ != NULL) && (root_cert_path_[0] != '\0')) {
+  if (!root_cert_path_.empty()) {
     grpc::string root_cert(read_file_into_string(root_cert_path_));
     opts.pem_root_certs = root_cert;
   }
@@ -149,7 +149,7 @@ void api_source_impl::readloop() {
   }
 }
 
-grpc::string api_source_impl::read_file_into_string(const char *filename) {
+grpc::string api_source_impl::read_file_into_string(std::string filename) {
   std::ifstream file(filename);
   std::stringstream stream;
   stream << file.rdbuf();

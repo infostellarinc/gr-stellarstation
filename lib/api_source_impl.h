@@ -36,9 +36,9 @@ namespace stellarstation {
 
 class api_source_impl : public api_source {
  public:
-  api_source_impl(const char *satellite_id, const char *stream_id,
-                  const char *key_path, const char *root_cert_path,
-                  const char *api_url);
+  api_source_impl(std::string satellite_id, std::string stream_id,
+                  std::string key_path, std::string root_cert_path,
+                  std::string api_url);
   ~api_source_impl();
 
   bool start();
@@ -46,15 +46,15 @@ class api_source_impl : public api_source {
 
  private:
   void readloop();
-  grpc::string read_file_into_string(const char *filename);
+  grpc::string read_file_into_string(std::string filename);
 
   std::thread *thread_;
   const pmt::pmt_t port_;
-  const char *satellite_id_;
-  const char *stream_id_;
-  const char *key_path_;
-  const char *root_cert_path_;
-  const char *api_url_;
+  std::string satellite_id_;
+  std::string stream_id_;
+  std::string key_path_;
+  std::string root_cert_path_;
+  std::string api_url_;
   grpc::ClientContext context_;
   std::unique_ptr<StellarStationService::Stub> stub_;
   std::shared_ptr<grpc::ClientReaderWriter<SatelliteStreamRequest,

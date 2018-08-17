@@ -56,9 +56,9 @@ class STELLARSTATION_API api_source : virtual public gr::block {
    * Leave blank when connecting to the real API
    * @param api_url API URL to connect to.
    */
-  static sptr make(const char *satellite_id, const char *stream_id,
-                   const char *key_path, const char *root_cert_path,
-                   const char *api_url);
+  static sptr make(std::string satellite_id, std::string stream_id,
+                   std::string key_path, std::string root_cert_path,
+                   std::string api_url);
 };
 
 }  // namespace stellarstation
