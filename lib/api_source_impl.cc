@@ -123,13 +123,13 @@ namespace gr {
 
             pmt::pmt_t dict_pmt(pmt::make_dict());
             dict_pmt = pmt::dict_add(dict_pmt,
-                                     pmt::intern("Downlink Frequency Hz"),
+                                     pmt::intern("DOWNLINK_FREQUENCY_HZ"),
                                      pmt::from_uint64(telem_resp.telemetry().downlink_frequency_hz()));
             dict_pmt = pmt::dict_add(dict_pmt,
-                                     pmt::intern("Framing"),
+                                     pmt::intern("FRAMING"),
                                      pmt::from_uint64(telem_resp.telemetry().framing()));
             dict_pmt = pmt::dict_add(dict_pmt,
-                                     pmt::intern("Frame header"),
+                                     pmt::intern("FRAME_HEADER"),
                                      pmt::make_blob(&telem_resp.telemetry().frame_header()[0],
                                                     telem_resp.telemetry().frame_header().size()));
 

@@ -32,6 +32,7 @@
     <key>root_cert_path</key>
     <value></value>
     <type>file_open</type>
+    <hide>part</hide>
   </param>
 
   <param>
@@ -39,6 +40,7 @@
     <key>api_url</key>
     <value>"api.stellarstation.com"</value>
     <type>string</type>
+    <hide>part</hide>
   </param>
 
   <source>

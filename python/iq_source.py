@@ -38,7 +38,7 @@ class iq_source(gr.hier_block2):
 
         # Define blocks and connect them
         api_source = stellarstation_swig.api_source(satellite_id, stream_id, key_path, root_cert_path, api_url)
-        pdu_filter = blocks.pdu_filter(pmt.intern("Framing"), pmt.from_uint64(0))  # Parse only packets with IQ Framing
+        pdu_filter = blocks.pdu_filter(pmt.intern("FRAMING"), pmt.from_uint64(0))  # Parse only packets with IQ Framing
         pdu_to_stream = stellarstation_swig.pdu_to_stream(gr.sizeof_gr_complex)
 
         self.msg_connect((api_source, 'out'), (pdu_filter, 'pdus'))
