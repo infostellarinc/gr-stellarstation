@@ -32,4 +32,5 @@ except ImportError:
 
 # import any pure python here
 from iq_source import iq_source
+from bitstream_source import bitstream_source
 #

@@ -24,22 +24,21 @@ from gnuradio import blocks
 import pmt
 from stellarstation import stellarstation_swig
 
-
-class iq_source(gr.hier_block2):
+class bitstream_source(gr.hier_block2):
     """
-    This hierarchical block contains a block for streaming IQ data from a satellite
+    This hierarchical block contains a block for streaming bitstream data from a satellite
     using the Stellarstation API.
     """
     def __init__(self, satellite_id, stream_id, key_path, root_cert_path="", api_url="api.stellarstation.com"):
         gr.hier_block2.__init__(self,
-            "iq_source",
-            gr.io_signature(0, 0, 0),  # Input signature
-            gr.io_signature(1, 1, gr.sizeof_gr_complex))  # Output signature
+                                "iq_source",
+                                gr.io_signature(0, 0, 0),  # Input signature
+                                gr.io_signature(1, 1, gr.sizeof_char))  # Output signature
 
         # Define blocks and connect them
         api_source = stellarstation_swig.api_source(satellite_id, stream_id, key_path, root_cert_path, api_url)
-        pdu_filter = blocks.pdu_filter(pmt.intern("FRAMING"), pmt.from_uint64(2))  # Parse only packets with IQ Framing
-        pdu_to_stream = stellarstation_swig.pdu_to_stream(gr.sizeof_gr_complex)
+        pdu_filter = blocks.pdu_filter(pmt.intern("FRAMING"), pmt.from_uint64(0))  # Parse only packets with Bitstream Framing
+        pdu_to_stream = stellarstation_swig.pdu_to_stream(gr.sizeof_char)
 
         self.msg_connect((api_source, 'out'), (pdu_filter, 'pdus'))
         self.msg_connect((pdu_filter, 'pdus'), (pdu_to_stream, 'pdu'))

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<block>
+  <name>Stellarstation Bitstream Source</name>
+  <key>stellarstation_bitstream_source</key>
+  <category>[stellarstation]</category>
+  <import>import stellarstation</import>
+  <make>stellarstation.bitstream_source($satellite_id, $stream_id, $key_path, $root_cert_path, $api_url)</make>
+  <param>
+    <name>Satellite ID</name>
+    <key>satellite_id</key>
+    <value>""</value>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>Stream ID</name>
+    <key>stream_id</key>
+    <value>""</value>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>Stellarstation API Key Filepath</name>
+    <key>key_path</key>
+    <value></value>
+    <type>file_open</type>
+  </param>
+
+  <param>
+    <name>Fake Server tls.crt Filepath</name>
+    <key>root_cert_path</key>
+    <value></value>
+    <type>file_open</type>
+    <hide>part</hide>
+  </param>
+
+  <param>
+    <name>Stellarstation API URL</name>
+    <key>api_url</key>
+    <value>"api.stellarstation.com"</value>
+    <type>string</type>
+    <hide>part</hide>
+  </param>
+
+  <source>
+    <name>out</name>
+    <type>byte</type>
+  </source>
+
+</block>

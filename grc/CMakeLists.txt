@@ -21,5 +21,6 @@
 install(FILES
     stellarstation_api_source.xml
     stellarstation_pdu_to_stream.xml
-    stellarstation_iq_source.xml DESTINATION share/gnuradio/grc/blocks
+    stellarstation_iq_source.xml
+    stellarstation_bitstream_source.xml DESTINATION share/gnuradio/grc/blocks
 )
