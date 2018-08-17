@@ -28,9 +28,7 @@
 
 #include "qa_stellarstation.h"
 
-CppUnit::TestSuite *
-qa_stellarstation::suite()
-{
+CppUnit::TestSuite *qa_stellarstation::suite() {
   CppUnit::TestSuite *s = new CppUnit::TestSuite("stellarstation");
 
   return s;

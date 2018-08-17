@@ -26,9 +26,9 @@
 #include <gnuradio/attributes.h>
 
 #ifdef gnuradio_stellarstation_EXPORTS
-#  define STELLARSTATION_API __GR_ATTR_EXPORT
+#define STELLARSTATION_API __GR_ATTR_EXPORT
 #else
-#  define STELLARSTATION_API __GR_ATTR_IMPORT
+#define STELLARSTATION_API __GR_ATTR_IMPORT
 #endif
 
 #endif /* INCLUDED_STELLARSTATION_API_H */

@@ -29,16 +29,15 @@
 #include <cppunit/XmlOutputter.h>
 
 #include <gnuradio/unittests.h>
-#include "qa_stellarstation.h"
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include "qa_stellarstation.h"
 
-int
-main (int argc, char **argv)
-{
+int main(int argc, char **argv) {
   CppUnit::TextTestRunner runner;
   std::ofstream xmlfile(get_unittest_path("stellarstation.xml").c_str());
-  CppUnit::XmlOutputter *xmlout = new CppUnit::XmlOutputter(&runner.result(), xmlfile);
+  CppUnit::XmlOutputter *xmlout =
+      new CppUnit::XmlOutputter(&runner.result(), xmlfile);
 
   runner.addTest(qa_stellarstation::suite());
   runner.setOutputter(xmlout);
