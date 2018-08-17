@@ -74,7 +74,6 @@ namespace gr {
       grpc::string json_key(read_file_into_string(key_path_));
       auto call_creds = grpc::ServiceAccountJWTAccessCredentials(json_key);
 
-      // TODO: This is probably wrong for the real stellarstation api
       grpc::SslCredentialsOptions opts;
       if ((root_cert_path_ != NULL) && (root_cert_path_[0] != '\0')) {
          grpc::string root_cert(read_file_into_string(root_cert_path_));
@@ -143,7 +142,6 @@ namespace gr {
     }
 
     grpc::string api_source_impl::read_file_into_string(const char *filename) {
-      std::cout << filename << std::endl;
       std::ifstream file(filename);
       std::stringstream stream;
       stream << file.rdbuf();
