@@ -35,6 +35,15 @@ namespace gr {
 namespace stellarstation {
 
 class api_source_impl : public api_source {
+ public:
+  api_source_impl(const char *satellite_id, const char *stream_id,
+                  const char *key_path, const char *root_cert_path,
+                  const char *api_url);
+  ~api_source_impl();
+
+  bool start();
+  bool stop();
+
  private:
   void readloop();
   grpc::string read_file_into_string(const char *filename);
@@ -51,15 +60,6 @@ class api_source_impl : public api_source {
   std::shared_ptr<grpc::ClientReaderWriter<SatelliteStreamRequest,
                                            SatelliteStreamResponse> >
       client_reader_writer_;
-
- public:
-  api_source_impl(const char *satellite_id, const char *stream_id,
-                  const char *key_path, const char *root_cert_path,
-                  const char *api_url);
-  ~api_source_impl();
-
-  bool start();
-  bool stop();
 };
 
 }  // namespace stellarstation

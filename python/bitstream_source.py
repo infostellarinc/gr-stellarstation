@@ -35,7 +35,7 @@ class bitstream_source(gr.hier_block2):
         :param stream_id: Stream ID to connect to. Can be an empty string.
         :param key_path: Path to JSON API Key
         :param root_cert_path: Path to root certificate for development server.
-        Leave blank for connecting to the real API
+        Leave blank when connecting to the real API
         :param api_url: API URL to connect to.
         """
         gr.hier_block2.__init__(self,

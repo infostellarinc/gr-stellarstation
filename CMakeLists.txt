@@ -156,6 +156,7 @@ endif(APPLE)
 # Find gnuradio build dependencies
 ########################################################################
 find_package(CppUnit)
+find_package(Log4cpp)
 find_package(Doxygen)
 
 # Search for GNU Radio and its components and versions. Add any
@@ -179,6 +180,12 @@ if(DOXYGEN_FOUND)
 else(DOXYGEN_FOUND)
 	option(ENABLE_DOXYGEN "Build docs using Doxygen" OFF)
 endif(DOXYGEN_FOUND)
+
+########################################################################
+# Setup logging
+########################################################################
+include(GrMiscUtils)
+GR_LOGGING()
 
 ########################################################################
 # Setup the include and linker paths

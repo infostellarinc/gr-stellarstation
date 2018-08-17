@@ -108,8 +108,10 @@ bool api_source_impl::stop() {
 
   grpc::Status status = client_reader_writer_->Finish();
   if (!status.ok()) {
-    std::cerr << "rpc failed. Error code: " << status.error_code() << std::endl
-              << status.error_message() << status.error_details() << std::endl;
+    GR_LOG_ERROR(d_logger,
+                 boost::format("rpc failed. error code:  %1%\n%2%\n%3%") %
+                     status.error_code() % status.error_message() %
+                     status.error_details());
   }
 
   std::cout << "Stopped successfully" << std::endl;
@@ -119,7 +121,9 @@ bool api_source_impl::stop() {
 void api_source_impl::readloop() {
   SatelliteStreamResponse response;
   while (client_reader_writer_->Read(&response)) {
-    std::cout << "STREAM ID" << response.stream_id() << std::endl;
+    GR_LOG_DEBUG(
+        d_logger,
+        boost::format("Packet received. Stream ID: %1%") % response.stream_id())
     if (response.has_receive_telemetry_response()) {
       const ReceiveTelemetryResponse &telem_resp =
           response.receive_telemetry_response();
