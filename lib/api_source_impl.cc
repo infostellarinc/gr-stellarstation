@@ -98,7 +98,7 @@ bool api_source_impl::start() {
 }
 
 bool api_source_impl::stop() {
-  std::cout << "Trying to stop" << std::endl;
+  GR_LOG_DEBUG(d_logger, "Trying to stop");
 
   // Signal the server it's time to stop
   client_reader_writer_->WritesDone();
@@ -113,8 +113,9 @@ bool api_source_impl::stop() {
                      status.error_code() % status.error_message() %
                      status.error_details());
   }
+  stub_.reset(NULL);  // Explicitly close the gRPC connection by deleting stub
 
-  std::cout << "Stopped successfully" << std::endl;
+  GR_LOG_DEBUG(d_logger, "Stopped successfully");
   return true;
 }
 
