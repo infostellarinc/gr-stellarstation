@@ -23,5 +23,6 @@
 ########################################################################
 install(FILES
     api.h
-    DESTINATION include/stellarstation
+    api_source.h
+    pdu_to_stream.h DESTINATION include/stellarstation
 )

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<block>
+  <name>Stellarstation IQ Source</name>
+  <key>stellarstation_iq_source</key>
+  <category>[stellarstation]</category>
+  <import>import gr_stellarstation</import>
+  <make>gr_stellarstation.iq_source($satellite_id, $stream_id, $key, $root_cert_path, $api_url)</make>
+
+  <param>
+    <name>Satellite ID</name>
+    <key>satellite_id</key>
+    <value>""</value>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>Stream ID</name>
+    <key>stream_id</key>
+    <value>""</value>
+    <type>string</type>
+  </param>
+
+  <param>
+    <name>Stellarstation API Key Filepath</name>
+    <key>key</key>
+    <value></value>
+    <type>file_open</type>
+  </param>
+
+  <param>
+    <name>Fake Server tls.crt Filepath</name>
+    <key>root_cert_path</key>
+    <value></value>
+    <type>file_open</type>
+    <hide>part</hide>
+  </param>
+
+  <param>
+    <name>Stellarstation API URL</name>
+    <key>api_url</key>
+    <value>"api.stellarstation.com"</value>
+    <type>string</type>
+    <hide>part</hide>
+  </param>
+
+  <source>
+    <name>out</name>
+    <type>complex</type>
+  </source>
+
+</block>

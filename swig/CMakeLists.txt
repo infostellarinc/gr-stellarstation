@@ -53,7 +53,7 @@ GR_SWIG_MAKE(stellarstation_swig stellarstation_swig.i)
 ########################################################################
 # Install the build swig module
 ########################################################################
-GR_SWIG_INSTALL(TARGETS stellarstation_swig DESTINATION ${GR_PYTHON_DIR}/stellarstation)
+GR_SWIG_INSTALL(TARGETS stellarstation_swig DESTINATION ${GR_PYTHON_DIR}/gr_stellarstation)
 
 ########################################################################
 # Install swig .i files for development
