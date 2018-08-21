@@ -193,6 +193,19 @@ set(GR_STELLARSTATION_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INT
 set(GR_STELLARSTATION_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
 
 ########################################################################
+# Setup API dependencies
+########################################################################
+include(conan)
+
+# TODO(rag): These commands don't seem to actually add the remote. Don't see anything wrong with the
+# macro but figure it out.
+conan_add_remote(NAME bincrafters URL https://api.bintray.com/conan/bincrafters/public-conan)
+conan_add_remote(NAME inexorgame URL https://api.bintray.com/conan/inexorgame/inexor-conan)
+conan_add_remote(NAME stellarstation URL https://api.bintray.com/conan/infostellarinc/stellarstation-conan)
+
+conan_cmake_run(REQUIRES stellarstation-api/0.0.8@stellarstation/testing BASIC_SETUP BUILD missing)
+
+########################################################################
 # Create uninstall target
 ########################################################################
 configure_file(
