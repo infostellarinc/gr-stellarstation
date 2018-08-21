@@ -25,8 +25,6 @@ include(GrPlatform) #define LIB_SUFFIX
 
 include_directories(${Boost_INCLUDE_DIR})
 
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
-
 link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND stellarstation_sources
@@ -44,7 +42,7 @@ add_library(gnuradio-stellarstation SHARED ${stellarstation_sources})
 target_link_libraries(gnuradio-stellarstation
   ${Boost_LIBRARIES}
   ${GNURADIO_ALL_LIBRARIES}
-  ${CONAN_LIBS}
+  stellarstation grpc grpc++ gpr address_sorting protobuf protoc protobuf-lite pthread ssl crypto dl cares z
 )
 set_target_properties(gnuradio-stellarstation PROPERTIES DEFINE_SYMBOL "gnuradio_stellarstation_EXPORTS")
 
