@@ -69,24 +69,6 @@ if(POLICY CMP0046)
 endif()
 
 ########################################################################
-# Fetch Stellarstation API .proto
-########################################################################
-include(DownloadProject)
-download_project(PROJ stellarstation-api
-                 GIT_REPOSITORY https://github.com/infostellarinc/stellarstation-api.git
-                 GIT_TAG master)
-message(STATUS "stellarstation-api repo stored in ${stellarstation-api_SOURCE_DIR}")
-
-########################################################################
-# Find grgrpc dependencies
-########################################################################
-find_package(Protobuf REQUIRED)
-message(STATUS "Using protobuf ${protobuf_VERSION}")
-
-find_package(gRPC CONFIG REQUIRED)
-message(STATUS "Using gRPC ${gRPC_VERSION}")
-
-########################################################################
 # Compiler specific setup
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)
@@ -209,6 +191,19 @@ link_directories(
 # Set component parameters
 set(GR_STELLARSTATION_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE INTERNAL "" FORCE)
 set(GR_STELLARSTATION_SWIG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/swig CACHE INTERNAL "" FORCE)
+
+########################################################################
+# Setup API dependencies
+########################################################################
+include(conan)
+
+# TODO(rag): These commands don't seem to actually add the remote. Don't see anything wrong with the
+# macro but figure it out.
+conan_add_remote(NAME bincrafters URL https://api.bintray.com/conan/bincrafters/public-conan)
+conan_add_remote(NAME inexorgame URL https://api.bintray.com/conan/inexorgame/inexor-conan)
+conan_add_remote(NAME stellarstation URL https://api.bintray.com/conan/infostellarinc/stellarstation-conan)
+
+conan_cmake_run(REQUIRES stellarstation-api/0.0.8@stellarstation/testing BASIC_SETUP BUILD missing)
 
 ########################################################################
 # Create uninstall target
