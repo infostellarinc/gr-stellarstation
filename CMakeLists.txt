@@ -69,24 +69,6 @@ if(POLICY CMP0046)
 endif()
 
 ########################################################################
-# Fetch Stellarstation API .proto
-########################################################################
-include(DownloadProject)
-download_project(PROJ stellarstation-api
-                 GIT_REPOSITORY https://github.com/infostellarinc/stellarstation-api.git
-                 GIT_TAG master)
-message(STATUS "stellarstation-api repo stored in ${stellarstation-api_SOURCE_DIR}")
-
-########################################################################
-# Find grgrpc dependencies
-########################################################################
-find_package(Protobuf REQUIRED)
-message(STATUS "Using protobuf ${protobuf_VERSION}")
-
-find_package(gRPC CONFIG REQUIRED)
-message(STATUS "Using gRPC ${gRPC_VERSION}")
-
-########################################################################
 # Compiler specific setup
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX AND NOT WIN32)

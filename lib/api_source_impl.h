@@ -25,7 +25,7 @@
 
 #include <thread>
 
-#include "stellarstation.grpc.pb.h"
+#include "stellarstation/api/v1/stellarstation.grpc.pb.h"
 
 using stellarstation::api::v1::StellarStationService;
 using stellarstation::api::v1::SatelliteStreamRequest;

@@ -23,46 +23,17 @@
 ########################################################################
 include(GrPlatform) #define LIB_SUFFIX
 
-include_directories(${Boost_INCLUDE_DIR} ${Protobuf_INCLUDE_DIRS})
+include(conan)
 
-# {Protobuf,PROTOBUF}_FOUND is defined based on find_package type ("MODULE" vs "CONFIG").
-# For "MODULE", the case has also changed between cmake 3.5 and 3.6.
-# We use the legacy uppercase version for *_LIBRARIES AND *_INCLUDE_DIRS variables
-# as newer cmake versions provide them too for backward compatibility.
- if(Protobuf_FOUND OR PROTOBUF_FOUND)
-   if(TARGET protobuf::libprotobuf)
-     set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
-   else()
-     set(_PROTOBUF_LIBPROTOBUF ${PROTOBUF_LIBRARIES})
-     include_directories(${PROTOBUF_INCLUDE_DIRS})
-   endif()
-   if(TARGET protobuf::protoc)
-     set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
-   else()
-     set(_PROTOBUF_PROTOC ${PROTOBUF_PROTOC_EXECUTABLE})
-   endif()
- else()
-   message(WARNING "Failed to locate libprotobuf and protoc!")
- endif()
+# TODO(rag): These commands don't seem to actually add the remote. Don't see anything wrong with the
+# macro but figure it out.
+conan_add_remote(NAME bincrafters URL https://api.bintray.com/conan/bincrafters/public-conan)
+conan_add_remote(NAME inexorgame URL https://api.bintray.com/conan/inexorgame/inexor-conan)
+conan_add_remote(NAME stellarstation URL https://api.bintray.com/conan/infostellarinc/stellarstation-conan)
 
-# gRPC C++ plugin
-get_target_property(gRPC_CPP_PLUGIN_EXECUTABLE gRPC::grpc_cpp_plugin
-  IMPORTED_LOCATION_RELEASE)
+conan_cmake_run(REQUIRES stellarstation-api/0.0.8@stellarstation/testing BASIC_SETUP BUILD missing)
 
-get_filename_component(hw_proto "${stellarstation-api_SOURCE_DIR}/api/src/main/proto/stellarstation/api/v1/stellarstation.proto" ABSOLUTE)
-get_filename_component(hw_proto_path "${hw_proto}" PATH)
-
-protobuf_generate_cpp(hw_proto_srcs hw_proto_hdrs "${hw_proto}")
-set(hw_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/stellarstation.grpc.pb.cc")
-set(hw_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/stellarstation.grpc.pb.h")
-
-add_custom_command(
-       OUTPUT "${hw_grpc_srcs}" "${hw_grpc_hdrs}"
-       COMMAND ${_PROTOBUF_PROTOC}
-       ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}" -I "${hw_proto_path}"
-         --plugin=protoc-gen-grpc="${gRPC_CPP_PLUGIN_EXECUTABLE}"
-         "${hw_proto}"
-       DEPENDS "${hw_proto}")
+include_directories(${Boost_INCLUDE_DIR})
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
@@ -70,8 +41,6 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 list(APPEND stellarstation_sources
     api_source_impl.cc
-    ${hw_proto_srcs}
-    ${hw_grpc_srcs}
     pdu_to_stream_impl.cc
 )
 
@@ -85,8 +54,8 @@ add_library(gnuradio-stellarstation SHARED ${stellarstation_sources})
 target_link_libraries(gnuradio-stellarstation
   ${Boost_LIBRARIES}
   ${GNURADIO_ALL_LIBRARIES}
-  ${_PROTOBUF_LIBPROTOBUF}
-  gRPC::grpc++)
+  ${CONAN_LIBS}
+)
 set_target_properties(gnuradio-stellarstation PROPERTIES DEFINE_SYMBOL "gnuradio_stellarstation_EXPORTS")
 
 if(APPLE)
