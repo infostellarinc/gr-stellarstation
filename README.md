@@ -56,7 +56,7 @@ gr-stellarstation provides the block **StellarStation IQ Source** for this purpo
 
 ![iq_source_sample](docs/images/iq_source_sample.png)
 
-Note that we've configured the block to connect to *Satellite ID* "73" (corresponding to the weather satellite [NOAA 19](https://en.wikipedia.org/wiki/NOAA-19)) and given it the path of the StellarStation API Key via *StellarStation API Key Filepath*.
+We've configured the block to connect to *Satellite ID* "76" (corresponding to the weather satellite [NOAA 15](https://en.wikipedia.org/wiki/NOAA-15)) and given it the path of the StellarStation API Key via *StellarStation API Key Filepath*. Note that the *Satellite ID* parameter is a string. In GRC, you must enclose the ID in quotation marks i.e. "76".
 
 When this flowgraph runs, the block opens a stream to the StellarStation API, and converts all IQ packets received to a complex stream that can be used in downstream GNURadio blocks. We can display a live waterfall plot, save the stream to file, demodulate the data, or anything else GNURadio lets us do!
 
