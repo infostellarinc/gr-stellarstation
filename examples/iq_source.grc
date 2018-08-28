@@ -140,7 +140,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/rei/sampleAR2300IQ/test_stellarstation_file.bin</value>
+      <value>stellarstation_file.bin</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -290,7 +290,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(168, 124)</value>
+      <value>(240, 124)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -314,7 +314,7 @@
     </param>
     <param>
       <key>key</key>
-      <value>/home/rei/Downloads/stellarstation-private-key-amateur.json</value>
+      <value>/path/to/stellarstation_api_key.json</value>
     </param>
     <param>
       <key>api_url</key>

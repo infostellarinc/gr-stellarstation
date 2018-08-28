@@ -654,7 +654,7 @@
     </param>
     <param>
       <key>key</key>
-      <value>/home/rei/Downloads/stellarstation-private-key-amateur.json</value>
+      <value>/path/to/stellarstation_api_key.json</value>
     </param>
     <param>
       <key>api_url</key>
