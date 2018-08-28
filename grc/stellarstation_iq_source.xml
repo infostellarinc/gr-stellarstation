@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>Stellarstation IQ Source</name>
+  <name>StellarStation IQ Source</name>
   <key>stellarstation_iq_source</key>
   <category>[stellarstation]</category>
   <import>import gr_stellarstation</import>

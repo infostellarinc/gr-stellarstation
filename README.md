@@ -1,6 +1,6 @@
-# gr-stellarstation: GNURadio blocks for interacting with Stellarstation
+# gr-stellarstation: GNURadio blocks for interacting with StellarStation
 
-gr-stellarstation is an out-of-tree GNURadio module that provides blocks for easily integrating with the [Stellarstation](stellarstation.com) API in GNURadio flowgraphs.
+gr-stellarstation is an out-of-tree GNURadio module that provides blocks for easily integrating with the [StellarStation](stellarstation.com) API in GNURadio flowgraphs.
 
 ## Installation
 
@@ -44,34 +44,34 @@ $ sudo ldconfig
 
 See the [examples directory](examples/) for flowgraphs showing the usage of gr-stellarstation blocks.
 
-## Stellarstation API Key
+## StellarStation API Key
 
-To use most of the blocks in this module, you will need a Stellarstation API Key, which is a .json file containing credentials to access the Stellarstation API. You can request one from <https://www.stellarstation.com/>.
+To use most of the blocks in this module, you will need a StellarStation API Key, which is a .json file containing credentials to access the StellarStation API. You can request one from <https://www.stellarstation.com/>.
 
 ## Quickstart
 
-A typical use case of gr-stellarstation is direct streaming of complex I/Q data from a satellite tracked by Stellarstation to a GNURadio flowgraph in real-time.
+A typical use case of gr-stellarstation is direct streaming of complex I/Q data from a satellite tracked by StellarStation to a GNURadio flowgraph in real-time.
 
-gr-stellarstation provides the block **Stellarstation IQ Source** for this purpose.
+gr-stellarstation provides the block **StellarStation IQ Source** for this purpose.
 
 ![iq_source_sample](docs/images/iq_source_sample.png)
 
-Note that we've configured the block to connect to *Satellite ID* "73" (corresponding to the weather satellite [NOAA 19](https://en.wikipedia.org/wiki/NOAA-19)) and given it the path of the Stellarstation API Key via *Stellarstation API Key Filepath*.
+Note that we've configured the block to connect to *Satellite ID* "73" (corresponding to the weather satellite [NOAA 19](https://en.wikipedia.org/wiki/NOAA-19)) and given it the path of the StellarStation API Key via *StellarStation API Key Filepath*.
 
-When this flowgraph runs, the block opens a stream to the Stellarstation API, and converts all IQ packets received to a complex stream that can be used in downstream GNURadio blocks. We can display a live waterfall plot, save the stream to file, demodulate the data, or anything else GNURadio lets us do!
+When this flowgraph runs, the block opens a stream to the StellarStation API, and converts all IQ packets received to a complex stream that can be used in downstream GNURadio blocks. We can display a live waterfall plot, save the stream to file, demodulate the data, or anything else GNURadio lets us do!
 
 Here are a few more things to keep in mind about our flowgraph:
-* The sampling rate of the received stream is satellite-dependent. Currently, most amateur satellites that Stellarstation tracks are sampled at 112500Hz.
-* If a pass is not currently running, the Stellarstation API will return no data, and your flowgraph will not do anything.
+* The sampling rate of the received stream is satellite-dependent. Currently, most amateur satellites that StellarStation tracks are sampled at 112500Hz.
+* If a pass is not currently running, the StellarStation API will return no data, and your flowgraph will not do anything.
 * Depending on both the ground station's and the user's internet speed, samples may not be received in realtime. For example, to support streaming 112500Hz raw I/Q data in realtime, the ground station and the user need to support approximately ~1MBps upload and download speed, respectively. If either one is slower, the packets will still arrive in order without data loss, but  will no longer be in realtime.
 
-For other satellites, Stellarstation does demodulation directly on the ground station and streams back the demodulated bitstream. For users that wish to access this data, gr-stellarstation provides the **Stellarstation Bitstream Source** block.
+For other satellites, StellarStation does demodulation directly on the ground station and streams back the demodulated bitstream. For users that wish to access this data, gr-stellarstation provides the **StellarStation Bitstream Source** block.
 
 ![bit_source_sample](docs/images/bit_source_sample.png)
 
 ## Advanced Usage
 
-The **Stellarstation IQ Source** and **Stellarstation Bitstream Source** blocks are hierarchical blocks based on the core **Stellarstation API Source** block. It is responsible for connecting to the Stellarstation API via [this API call](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L69) and sending received packets as GNURadio PMTs in [PDU](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3.1_PDUs) format for downstream blocks to consume.
+The **StellarStation IQ Source** and **StellarStation Bitstream Source** blocks are hierarchical blocks based on the core **StellarStation API Source** block. It is responsible for connecting to the StellarStation API via [this API call](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L69) and sending received packets as GNURadio PMTs in [PDU](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3.1_PDUs) format for downstream blocks to consume.
 
 Being in PDU format, users can take advantage of GNURadio's built-in PDU manipulation blocks, such as PDU Filter, PDU Remove, etc.
 
@@ -85,10 +85,10 @@ The PDUs received contain the following metadata:
 
 The PDU vector (second element of the PMT Pair) corresponds to the actual telemetry data in raw byte format. What this data represents depends on the packet's Framing.
 
-While the hierarchical **Stellarstation IQ Source** and **Stellarstation Bitstream Source** blocks can only return data from **IQ** and **BITSTREAM** framings, respectively, we can use the **Stellarstation API Source** block directly to work with data from more than one Framing in a single flowgraph.
+While the hierarchical **StellarStation IQ Source** and **StellarStation Bitstream Source** blocks can only return data from **IQ** and **BITSTREAM** framings, respectively, we can use the **StellarStation API Source** block directly to work with data from more than one Framing in a single flowgraph.
 
 ![api_source_sample](docs/images/api_source_sample.png)
 
-The above flowgraph shows an example of how to use the **Stellarstation API Source** to work with a satellite's bitstream, IQ data, and decoded AX.25 packets at the same time.
+The above flowgraph shows an example of how to use the **StellarStation API Source** to work with a satellite's bitstream, IQ data, and decoded AX.25 packets at the same time.
 
 We use the **PDU Filter** block to specifically pick out IQ data packets, bitstream packets, and AX.25 packets. The **PDU to Stream** block is a utility block included in gr-stellarstation to convert I/Q packets to a complex stream or BITSTREAM packets to a bytestream.
