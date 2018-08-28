@@ -46,7 +46,7 @@ See the [examples directory](examples/) for flowgraphs showing the usage of gr-s
 
 ## StellarStation API Key
 
-To use most of the blocks in this module, you will need a StellarStation API Key, which is a .json file containing credentials to access the StellarStation API. You can request one from <https://www.stellarstation.com/>.
+To use most of the blocks in this module, you will need a StellarStation API Key, which is a .json file containing credentials to access the StellarStation API. An API key can be generated in the StellarStation Console.
 
 ## Quickstart
 
@@ -71,7 +71,7 @@ For other satellites, StellarStation does demodulation directly on the ground st
 
 ## Advanced Usage
 
-The **StellarStation IQ Source** and **StellarStation Bitstream Source** blocks are hierarchical blocks based on the core **StellarStation API Source** block. It is responsible for connecting to the StellarStation API via [this API call](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L69) and sending received packets as GNURadio PMTs in [PDU](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3.1_PDUs) format for downstream blocks to consume.
+The **StellarStation IQ Source** and **StellarStation Bitstream Source** blocks are hierarchical blocks based on the core **StellarStation API Source** block. It is responsible for connecting to the StellarStation API and sending received packets as GNURadio PMTs in [PDU](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3.1_PDUs) format for downstream blocks to consume.
 
 Being in PDU format, users can take advantage of GNURadio's built-in PDU manipulation blocks, such as PDU Filter, PDU Remove, etc.
 
@@ -79,7 +79,7 @@ The PDUs received contain the following metadata:
 
 |Key|Type|description|
 |---|----|-----------|
-|FRAMING|uint64|Contains the framing of telemetry data received in this packet. View [this](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L129) for the meaning of each framing option.|
+|FRAMING|uint64|Contains the framing of telemetry data received in this packet. View the `Framing` format from this [API definition](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto) for the meaning of each framing option.|
 |DOWNLINK_FREQUENCY_HZ|uint64|Contains the satellite's downlink frequency.|
 |FRAME_HEADER|blob|Contains the frame's header, if any.|
 

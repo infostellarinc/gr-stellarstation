@@ -4,9 +4,9 @@ tags:
   - sdr
   - satellites
 author:
-  - Infostellar, Inc. <authors@email.address>
+  - Infostellar <support@istellar.jp>
 copyright_owner:
-  - Infostellar, Inc.
+  - Infostellar
 license: GPLv3
 repo: https://github.com/infostellarinc/gr-stellarstation
 website: https://www.stellarstation.com/
