@@ -17,6 +17,7 @@
     <key>stream_id</key>
     <value>""</value>
     <type>string</type>
+    <hide>part</hide>
   </param>
 
   <param>
