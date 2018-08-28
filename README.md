@@ -68,3 +68,27 @@ Here are a few more things to keep in mind about our flowgraph:
 For other satellites, Stellarstation does demodulation directly on the ground station and streams back the demodulated bitstream. For users that wish to access this data, gr-stellarstation provides the **Stellarstation Bitstream Source** block.
 
 ![bit_source_sample](docs/images/bit_source_sample.png)
+
+## Advanced Usage
+
+The **Stellarstation IQ Source** and **Stellarstation Bitstream Source** blocks are hierarchical blocks based on the core **Stellarstation API Source** block. It is responsible for connecting to the Stellarstation API via [this API call](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L69) and sending received packets as GNURadio PMTs in [PDU](https://wiki.gnuradio.org/index.php/Guided_Tutorial_Programming_Topics#5.3.1_PDUs) format for downstream blocks to consume.
+
+Being in PDU format, users can take advantage of GNURadio's built-in PDU manipulation blocks, such as PDU Filter, PDU Remove, etc.
+
+The PDUs received contain the following metadata:
+
+|Key|Type|description|
+|---|----|-----------|
+|FRAMING|uint64|Contains the framing of telemetry data received in this packet. View [this](https://github.com/infostellarinc/stellarstation-api/blob/master/api/src/main/proto/stellarstation/api/v1/stellarstation.proto#L129) for the meaning of each framing option.|
+|DOWNLINK_FREQUENCY_HZ|uint64|Contains the satellite's downlink frequency.|
+|FRAME_HEADER|blob|Contains the frame's header, if any.|
+
+The PDU vector (second element of the PMT Pair) corresponds to the actual telemetry data in raw byte format. What this data represents depends on the packet's Framing.
+
+While the hierarchical **Stellarstation IQ Source** and **Stellarstation Bitstream Source** blocks can only return data from **IQ** and **BITSTREAM** framings, respectively, we can use the **Stellarstation API Source** block directly to work with data from more than one Framing in a single flowgraph.
+
+![api_source_sample](docs/images/api_source_sample.png)
+
+The above flowgraph shows an example of how to use the **Stellarstation API Source** to work with a satellite's bitstream, IQ data, and decoded AX.25 packets at the same time.
+
+We use the **PDU Filter** block to specifically pick out IQ data packets, bitstream packets, and AX.25 packets. The **PDU to Stream** block is a utility block included in gr-stellarstation to convert I/Q packets to a complex stream or BITSTREAM packets to a bytestream.
