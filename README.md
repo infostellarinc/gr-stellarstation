@@ -1,6 +1,6 @@
 # gr-stellarstation: GNURadio blocks for interacting with StellarStation
 
-gr-stellarstation is an out-of-tree GNURadio module that provides blocks for easily integrating with the [StellarStation](stellarstation.com) API in GNURadio flowgraphs.
+gr-stellarstation is an out-of-tree GNURadio module that provides blocks for easily integrating with the [StellarStation](https://www.stellarstation.com/) API in GNURadio flowgraphs.
 
 ## Installation
 
