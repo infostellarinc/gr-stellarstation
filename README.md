@@ -34,6 +34,7 @@ Proceed to install gr-stellarstation normally with CMake:
 $ git clone https://github.com/infostellarinc/gr-stellarstation.git
 $ cd gr-stellarstation
 $ mkdir build
+$ cd build
 $ cmake ..
 $ make
 $ sudo make install
