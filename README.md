@@ -4,6 +4,10 @@ gr-stellarstation is an out-of-tree GNURadio module that provides blocks for eas
 
 ## Installation
 
+Although gr-stellarstation should work on any platform running GNURadio, only Linux is currently officially supported. Installation procedure on other platforms may vary.
+
+Note on required Python version: gr-stellarstation has only been tested with the latest stable version of GNURadio (3.7.x), which does not support Python 3.
+
 ### PyBOMBS
 
 PyBOMBs support is currently under construction.
@@ -28,7 +32,7 @@ $ conan remote add inexorgame https://api.bintray.com/conan/inexorgame/inexor-co
 $ conan remote add stellarstation https://api.bintray.com/conan/infostellarinc/stellarstation-conan
 ```
 
-Proceed to install gr-stellarstation normally with CMake:
+Proceed to install gr-stellarstation normally with CMake. Note that depending on your install path, you may need to run `make install` and `ldconfig` with superuser privileges:
 
 ```bash
 $ git clone https://github.com/infostellarinc/gr-stellarstation.git
@@ -37,8 +41,8 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ sudo make install
-$ sudo ldconfig
+$ make install
+$ ldconfig
 ```
 
 ## Examples
