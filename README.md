@@ -6,6 +6,8 @@ gr-stellarstation is an out-of-tree GNURadio module that provides blocks for eas
 
 Although gr-stellarstation should work on any platform running GNURadio, only Linux is currently officially supported. Installation procedure on other platforms may vary.
 
+Note on required Python version: gr-stellarstation has only been tested with the latest stable version of GNURadio (3.7.x), which does not support Python 3.
+
 ### PyBOMBS
 
 PyBOMBs support is currently under construction.
