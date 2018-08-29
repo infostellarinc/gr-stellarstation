@@ -28,7 +28,7 @@ $ conan remote add inexorgame https://api.bintray.com/conan/inexorgame/inexor-co
 $ conan remote add stellarstation https://api.bintray.com/conan/infostellarinc/stellarstation-conan
 ```
 
-Proceed to install gr-stellarstation normally with CMake:
+Proceed to install gr-stellarstation normally with CMake. Note that depending on your install path, you may need to run `make install` and `ldconfig` with superuser privileges:
 
 ```bash
 $ git clone https://github.com/infostellarinc/gr-stellarstation.git
@@ -37,8 +37,8 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-$ sudo make install
-$ sudo ldconfig
+$ make install
+$ ldconfig
 ```
 
 ## Examples
