@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>Stellarstation API Source</name>
+  <name>StellarStation API Source</name>
   <key>stellarstation_api_source</key>
   <category>[stellarstation]/core</category>
   <import>import gr_stellarstation</import>
@@ -18,6 +18,7 @@
     <key>stream_id</key>
     <value>""</value>
     <type>string</type>
+    <hide>part</hide>
   </param>
 
   <param>

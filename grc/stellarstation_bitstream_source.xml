@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <block>
-  <name>Stellarstation Bitstream Source</name>
+  <name>StellarStation Bitstream Source</name>
   <key>stellarstation_bitstream_source</key>
   <category>[stellarstation]</category>
   <import>import gr_stellarstation</import>
@@ -17,6 +17,7 @@
     <key>stream_id</key>
     <value>""</value>
     <type>string</type>
+    <hide>part</hide>
   </param>
 
   <param>

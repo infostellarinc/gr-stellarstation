@@ -1,16 +1,14 @@
 title: The STELLARSTATION OOT Module
-brief: Short description of gr-stellarstation
-tags: # Tags are arbitrary, but look at CGRAN what other authors are using
+brief: gr-stellarstation is an out-of-tree GNURadio module that provides blocks for easily integrating with the Stellarstation API in GNURadio flowgraphs.
+tags:
   - sdr
+  - satellites
 author:
-  - Author Name <authors@email.address>
+  - Infostellar <support@istellar.jp>
 copyright_owner:
-  - Copyright Owner 1
-license:
-#repo: # Put the URL of the repository here, or leave blank for default
-#website: <module_website> # If you have a separate project website, put it here
+  - Infostellar
+license: GPLv3
+repo: https://github.com/infostellarinc/gr-stellarstation
+website: https://www.stellarstation.com/
 #icon: <icon_url> # Put a URL to a square image here that will be used as an icon on CGRAN
 ---
-A longer, multi-line description of gr-stellarstation.
-You may use some *basic* Markdown here.
-If left empty, it will try to find a README file instead.

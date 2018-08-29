@@ -76,3 +76,5 @@ flowgraphs/*.py
 *rice-box.go
 
 *.pyc
+
+examples/*.py
