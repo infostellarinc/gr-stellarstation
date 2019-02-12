@@ -203,7 +203,9 @@ conan_add_remote(NAME bincrafters URL https://api.bintray.com/conan/bincrafters/
 conan_add_remote(NAME inexorgame URL https://api.bintray.com/conan/inexorgame/inexor-conan)
 conan_add_remote(NAME stellarstation URL https://api.bintray.com/conan/infostellarinc/stellarstation-conan)
 
-conan_cmake_run(REQUIRES stellarstation-api/0.0.8@stellarstation/testing BASIC_SETUP BUILD missing)
+conan_cmake_run(REQUIRES stellarstation-api/0.0.8@stellarstation/testing
+                         grpc/1.17.2@inexorgame/stable
+                BASIC_SETUP BUILD missing)
 list(FILTER CONAN_LIBS EXCLUDE REGEX "(grpc_unsecure|grpc\\+\\+_unsecure)")
 
 ########################################################################
